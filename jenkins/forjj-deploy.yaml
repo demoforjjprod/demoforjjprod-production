@@ -1,0 +1,57 @@
+deploy:
+  deployment:
+    serviceaddr: 51.15.233.161
+    serviceport: "8080"
+    to: docker
+  name: production
+  type: PRO
+  ssl:
+    method: none
+features:
+- feature:jenkins-init
+- feature:proxy
+- feature:seed-job
+- feature:basic-security
+- feature:tcp-slave-agent-port
+- feature:jenkins-pipeline
+- plugin:managed-scripts
+- plugin:embeddable-build-status
+- feature:credentials
+- feature:csrf
+- plugin:config-file-provider
+- feature:multibranch-github-pipeline
+- plugin:timestamper
+- plugin:mask-passwords
+- plugin:blueocean
+- plugin:blueocean-github-pipeline
+- plugin:ws-cleanup
+- feature:yet-another-docker-plugin
+dockerfile:
+  fromimage: forjdevops/jenkins
+  fromimageversion: ""
+  maintainer: ""
+jenkinsimage:
+  name: demoforjjprod-jenkins
+  registryreponame: demoforjjprod
+  registryserver: hub.docker.com
+  version: ""
+projects:
+  dsl-repo: https://github.com/demoforjjprod/demoforjjprod-production
+  dsl-path: jenkins/jobs-dsl
+  dsl-default: true
+  list:
+    demoforjjprod-production:
+      name: demoforjjprod-production
+      sourcetype: github
+      github:
+        apiurl: https://api.github.com/
+        repo: demoforjjprod-production
+        repoowner: demoforjjprod
+    forjj-example:
+      name: forjj-example
+      sourcetype: github
+      github:
+        apiurl: https://api.github.com/
+        repo: forjj-example
+        repoowner: demoforjjprod
+appextent: {}
